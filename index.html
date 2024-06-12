@@ -22,28 +22,42 @@
     </style>
 </head>
 <body>
-    <video id="video" controls>
+    <video id="video" controls autoplay>
         <source src="video.mp4" type="video/mp4">
         Il tuo browser non supporta la riproduzione video.
     </video>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var video = document.getElementById("video");
-            video.addEventListener("loadedmetadata", function() {
-                video.play().then(() => {
-                    if (video.requestFullscreen) {
+
+            // Avvia la riproduzione del video e richiedi la modalità a schermo intero al primo tocco sullo schermo
+            document.addEventListener("touchstart", function() {
+                if (video.requestFullscreen) {
+                    video.play().then(() => {
                         video.requestFullscreen();
-                    } else if (video.mozRequestFullScreen) { // Firefox
+                    }).catch(error => {
+                        console.error("Play failed:", error);
+                    });
+                } else if (video.mozRequestFullScreen) { // Firefox
+                    video.play().then(() => {
                         video.mozRequestFullScreen();
-                    } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    }).catch(error => {
+                        console.error("Play failed:", error);
+                    });
+                } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    video.play().then(() => {
                         video.webkitRequestFullscreen();
-                    } else if (video.msRequestFullscreen) { // IE/Edge
+                    }).catch(error => {
+                        console.error("Play failed:", error);
+                    });
+                } else if (video.msRequestFullscreen) { // IE/Edge
+                    video.play().then(() => {
                         video.msRequestFullscreen();
-                    }
-                }).catch(error => {
-                    console.error("Play failed:", error);
-                });
-            });
+                    }).catch(error => {
+                        console.error("Play failed:", error);
+                    });
+                }
+            }, { once: true }); // Rimuove l'evento dopo il primo tocco
         });
     </script>
 </body>
