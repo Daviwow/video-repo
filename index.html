@@ -6,9 +6,21 @@
     <title>Video</title>
 </head>
 <body>
-    <video width="1300" controls>
+    <h1>Guarda il Video</h1>
+    <video id="fullscreen-video" width="100%" height="100%" controls autoplay>
         <source src="video.mp4" type="video/mp4">
-        Your browser isn't supported.
+        Il tuo browser non supporta la riproduzione video.
     </video>
+
+    <script>
+        // Codice per attivare la modalità a schermo intero quando il video viene caricato
+        document.addEventListener('DOMContentLoaded', function () {
+            var video = document.getElementById('fullscreen-video');
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+                video.requestFullscreen(); // Attiva la modalità a schermo intero
+            });
+        });
+    </script>
 </body>
 </html>
